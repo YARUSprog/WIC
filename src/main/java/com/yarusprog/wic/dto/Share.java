@@ -5,19 +5,17 @@ public class Share {
     private String companyName;
     private Integer allItemsCount;
     private Integer pickedItemsCount;
-    private Integer stateOfShare;
-    private Boolean isSuccess;
-    private Integer errorCode;
+    private String color;
+    private Integer state;
 
     public Share(final String pictureOfCompanyUrl, final String companyName, final Integer allItemsCount, final
-    Integer pickedItemsCount, final Integer stateOfShare, final Boolean isSuccess, final Integer errorCode) {
+    Integer pickedItemsCount, final String color, final Integer state) {
         this.pictureOfCompanyUrl = pictureOfCompanyUrl;
         this.companyName = companyName;
         this.allItemsCount = allItemsCount;
         this.pickedItemsCount = pickedItemsCount;
-        this.stateOfShare = stateOfShare;
-        this.isSuccess = isSuccess;
-        this.errorCode = errorCode;
+        this.color = color;
+        this.state = state;
     }
 
     public String getPictureOfCompanyUrl() {
@@ -52,27 +50,20 @@ public class Share {
         this.pickedItemsCount = pickedItemsCount;
     }
 
-    public Integer getStateOfShare() {
-        return stateOfShare;
+    public String getColor() {
+        return color;
     }
 
-    public void setStateOfShare(final Integer stateOfShare) {
-        this.stateOfShare = stateOfShare;
+    public void setColor(final String color) {
+        this.color = color;
     }
 
-    public Boolean getSuccess() {
-        return isSuccess;
+    public Integer getState() {
+        return state;
     }
 
-    public void setSuccess(final Boolean success) {
-        isSuccess = success;
+    public void setState(final Integer stateOfShare) {
+        this.state = stateOfShare;
     }
 
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(final Integer errorCode) {
-        this.errorCode = errorCode;
-    }
 }
