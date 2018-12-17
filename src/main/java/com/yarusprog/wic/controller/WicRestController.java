@@ -1,5 +1,7 @@
 package com.yarusprog.wic.controller;
 
+import com.yarusprog.wic.dto.FriendListResponce;
+import com.yarusprog.wic.dto.RatingResponse;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.dto.UserProfileResponse;
 import com.yarusprog.wic.facade.ShareFacade;
@@ -30,5 +32,17 @@ public class WicRestController {
     @GetMapping("/profile")
     public UserProfileResponse getUserProfile(@RequestParam(value = "login", required = false) String login) {
         return userFacade.getUserProfile(login);
+    }
+
+    @GetMapping("/friends")
+    public FriendListResponce getFriends(@RequestParam(value = "login", required = false) String login) {
+        return userFacade.getFriends(login);
+    }
+
+    @GetMapping("/rating")
+    public RatingResponse getRatingOfUsers(@RequestParam(value = "country", required = false) String country,
+                                           @RequestParam(value = "region", required = false) String region,
+                                           @RequestParam(value = "city", required = false) String city) {
+        return userFacade.getRatingOfUsers(country, region, city);
     }
 }
