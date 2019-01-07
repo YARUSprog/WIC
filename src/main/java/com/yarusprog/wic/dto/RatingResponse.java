@@ -2,18 +2,17 @@ package com.yarusprog.wic.dto;
 
 import java.util.List;
 
-public class RatingResponse {
+public class RatingResponse extends Response {
+
     private List<UserDto> users;
-    private Boolean isSuccess;
-    private Integer errorCode;
 
     public RatingResponse() {
     }
 
     public RatingResponse(final List<UserDto> users, final Boolean isSuccess, final Integer errorCode) {
         this.users = users;
-        this.isSuccess = isSuccess;
-        this.errorCode = errorCode;
+        setSuccess(isSuccess);
+        setErrorCode(errorCode);
     }
 
     public List<UserDto> getUsers() {
@@ -22,21 +21,5 @@ public class RatingResponse {
 
     public void setUsers(final List<UserDto> users) {
         this.users = users;
-    }
-
-    public Boolean getSuccess() {
-        return isSuccess;
-    }
-
-    public void setSuccess(final Boolean success) {
-        isSuccess = success;
-    }
-
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(final Integer errorCode) {
-        this.errorCode = errorCode;
     }
 }

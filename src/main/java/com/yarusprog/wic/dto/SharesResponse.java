@@ -3,16 +3,14 @@ package com.yarusprog.wic.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SharesResponse {
+public class SharesResponse extends Response {
 
     private List<Share> shares;
-    private Boolean isSuccess;
-    private Integer errorCode;
 
     public SharesResponse() {
         shares = new ArrayList<>();
-        isSuccess = false;
-        errorCode = 0;
+        setSuccess(false);
+        setErrorCode(0);
     }
 
     public SharesResponse(final List<Share> shares) {
@@ -27,19 +25,4 @@ public class SharesResponse {
         this.shares = shares;
     }
 
-    public Boolean getSuccess() {
-        return isSuccess;
-    }
-
-    public void setSuccess(final Boolean success) {
-        isSuccess = success;
-    }
-
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(final Integer errorCode) {
-        this.errorCode = errorCode;
-    }
 }

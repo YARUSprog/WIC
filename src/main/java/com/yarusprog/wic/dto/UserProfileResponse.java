@@ -2,7 +2,7 @@ package com.yarusprog.wic.dto;
 
 import java.util.List;
 
-public class UserProfileResponse {
+public class UserProfileResponse extends Response {
 
     private String userName;
     private String photoUrl;
@@ -10,8 +10,6 @@ public class UserProfileResponse {
     private Float range;
     private List<Integer> pointsCount;
     private List<ContactDto> contacts;
-    private Boolean isSuccess;
-    private Integer errorCode;
 
     public String getUserName() {
         return userName;
@@ -59,21 +57,5 @@ public class UserProfileResponse {
 
     public void setContacts(final List<ContactDto> contacts) {
         this.contacts = contacts;
-    }
-
-    public Boolean getSuccess() {
-        return isSuccess;
-    }
-
-    public void setSuccess(final Boolean success) {
-        isSuccess = success;
-    }
-
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(final Integer errorCode) {
-        this.errorCode = errorCode;
     }
 }

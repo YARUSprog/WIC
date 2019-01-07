@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.yarusprog.wic.dto.Share;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.facade.ShareFacade;
+import com.yarusprog.wic.model.ShareState;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -28,11 +29,11 @@ public class ShareFacadeImpl implements ShareFacade {
         SharesResponse sharesResponse;
         if (valid) {
             Share mcdonaldShare = new Share("/images/mcdonalds-logo.png", "Macdonalds", 55,
-                    10, "#FF1493", 0);
+                    10, "#FF1493", ShareState.ACTIVE.ordinal());
             Share cocaColaShare = new Share("/images/cocacola-logo.png", "Cocacola", 23,
-                    5, "#FF1493", 1);
+                    0, "#FFA500", ShareState.SOON.ordinal());
             Share cocaColaShare2 = new Share("/images/cocacola-logo.png", "Cocacola", 44,
-                    12, "#FF1493", 2);
+                    0, "#32CD32", ShareState.COMPLETED.ordinal());
             sharesResponse = new SharesResponse(Arrays.asList(mcdonaldShare, cocaColaShare, cocaColaShare2));
             sharesResponse.setSuccess(true);
             sharesResponse.setErrorCode(0);

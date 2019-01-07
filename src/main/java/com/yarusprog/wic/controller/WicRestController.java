@@ -1,16 +1,18 @@
 package com.yarusprog.wic.controller;
 
-import com.yarusprog.wic.dto.FriendListResponce;
-import com.yarusprog.wic.dto.RatingResponse;
-import com.yarusprog.wic.dto.SharesResponse;
-import com.yarusprog.wic.dto.UserProfileResponse;
+import com.yarusprog.wic.dto.*;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.facade.UserFacade;
-
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 public class WicRestController {
@@ -20,6 +22,9 @@ public class WicRestController {
 
     @Autowired
     private UserFacade userFacade;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @GetMapping("/shares")
     public SharesResponse getShares(@RequestParam(value = "login", required = false) String login,
@@ -34,6 +39,20 @@ public class WicRestController {
         return userFacade.getUserProfile(login);
     }
 
+    @PostMapping("/profile/addContact")
+    public Response addContactToUser(@RequestParam(value = "login", required = true) String login,
+                                        @RequestParam(value = "typeContact", required = true) String
+                                                           typeContact,
+                                        @RequestParam(value = "contact", required = true) String contact) {
+        return userFacade.addContactToUser(login, typeContact, contact);
+    }
+
+    @PostMapping("/profile/setPhoto")
+    public Response setPhotoToUser(@RequestParam(value = "login", required = true) String login,
+                                   @RequestParam(value = "photo", required = true) MultipartFile photo) {
+        return userFacade.setPhotoToUser(login, photo);
+    }
+
     @GetMapping("/friends")
     public FriendListResponce getFriends(@RequestParam(value = "login", required = false) String login) {
         return userFacade.getFriends(login);
@@ -44,5 +63,15 @@ public class WicRestController {
                                            @RequestParam(value = "region", required = false) String region,
                                            @RequestParam(value = "city", required = false) String city) {
         return userFacade.getRatingOfUsers(country, region, city);
+    }
+
+    @GetMapping("/images/uploadedPhotos/{id}")
+    public void getImageAsResource(HttpServletResponse response, @PathVariable("id") String id) throws IOException {
+//        return new ServletContextResource(servletContext, servletContext.getContextPath() + "src/main/uploadedPhotos/" + id);
+
+        String path = servletContext.getContextPath() + "/src/main/uploadedPhotos/" + id;
+        InputStream in = servletContext.getResourceAsStream(path);
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(in, response.getOutputStream());
     }
 }
