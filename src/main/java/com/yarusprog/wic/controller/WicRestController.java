@@ -1,6 +1,7 @@
 package com.yarusprog.wic.controller;
 
 import com.yarusprog.wic.dto.*;
+import com.yarusprog.wic.facade.CompanyFacade;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.facade.UserFacade;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -24,6 +25,9 @@ public class WicRestController {
     private UserFacade userFacade;
 
     @Autowired
+    private CompanyFacade companyFacade;
+
+    @Autowired
     private ServletContext servletContext;
 
     @GetMapping("/shares")
@@ -37,6 +41,11 @@ public class WicRestController {
     @GetMapping("/profile")
     public UserProfileResponse getUserProfile(@RequestParam(value = "login", required = false) String login) {
         return userFacade.getUserProfile(login);
+    }
+
+    @GetMapping("/company")
+    public CompanyResponse getCompany(@RequestParam(value = "login", required = false) String login) {
+        return companyFacade.getShares(login);
     }
 
     @PostMapping("/profile/addContact")

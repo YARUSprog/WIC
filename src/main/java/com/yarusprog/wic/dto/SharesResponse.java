@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SharesResponse extends Response {
 
-    private List<Share> shares;
+    private List<ShareDto> shares;
 
     public SharesResponse() {
         shares = new ArrayList<>();
@@ -13,15 +13,15 @@ public class SharesResponse extends Response {
         setErrorCode(0);
     }
 
-    public SharesResponse(final List<Share> shares) {
+    public SharesResponse(final List<ShareDto> shares) {
         this.shares = shares;
     }
 
-    public List<Share> getShares() {
+    public List<ShareDto> getShares() {
         return shares;
     }
 
-    public void setShares(final List<Share> shares) {
+    public void setShares(final List<ShareDto> shares) {
         this.shares = shares;
     }
 

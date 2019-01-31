@@ -2,15 +2,15 @@ package com.yarusprog.wic.dto;
 
 public class UserDto {
     private String login;
-    private Integer countOfVins;
+    private Integer winCount;
     private String name;
 
     public UserDto() {
     }
 
-    public UserDto(final String login, final Integer countOfVins, final String name) {
+    public UserDto(final String login, final Integer winCount, final String name) {
         this.login = login;
-        this.countOfVins = countOfVins;
+        this.winCount = winCount;
         this.name = name;
     }
 
@@ -22,12 +22,12 @@ public class UserDto {
         this.login = login;
     }
 
-    public Integer getCountOfVins() {
-        return countOfVins;
+    public Integer getWinCount() {
+        return winCount;
     }
 
-    public void setCountOfVins(final Integer countOfVins) {
-        this.countOfVins = countOfVins;
+    public void setWinCount(final Integer winCount) {
+        this.winCount = winCount;
     }
 
     public String getName() {

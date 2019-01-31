@@ -62,7 +62,7 @@ public class UserFacadeImpl implements UserFacade {
         return getFriendListResponceTestData(isLoginValid(login));
     }
 
-    private Boolean isLoginValid(final String login) {
+    public static Boolean isLoginValid(final String login) {
         return !StringUtils.isEmpty(login) && ("myemail@gmail.com".equals(login) || "user@gmail.com".equals(login));
     }
 
@@ -71,9 +71,9 @@ public class UserFacadeImpl implements UserFacade {
         if (valid) {
             userProfileResponse.setUserName("Yarik&Dima");
             userProfileResponse.setPhotoUrl("/images/mcdonalds-logo.png");
-            userProfileResponse.setVinsCount(10);
+            userProfileResponse.setWinCount(10);
             userProfileResponse.setRange(2.3F);
-            userProfileResponse.setPointsCount(Arrays.asList(5, 3, 23, 9));
+            userProfileResponse.setPointsCount(Arrays.asList(5, 0, 0, 9, 0, 3, 0, 6, 23, 0, 9, 13));
             userProfileResponse.setContacts(userContacts.get("user@gmail.com"));
             userProfileResponse.setSuccess(true);
             userProfileResponse.setErrorCode(0);
@@ -151,5 +151,10 @@ public class UserFacadeImpl implements UserFacade {
             return new Response(true, 0);
         }
         return new Response(false, 1);
+    }
+
+    @Override
+    public Map<String, List<ContactDto>> getUserContacts() {
+        return userContacts;
     }
 }

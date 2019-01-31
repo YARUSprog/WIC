@@ -6,7 +6,7 @@ public class UserProfileResponse extends Response {
 
     private String userName;
     private String photoUrl;
-    private Integer vinsCount;
+    private Integer winCount;
     private Float range;
     private List<Integer> pointsCount;
     private List<ContactDto> contacts;
@@ -27,12 +27,12 @@ public class UserProfileResponse extends Response {
         this.photoUrl = photoUrl;
     }
 
-    public Integer getVinsCount() {
-        return vinsCount;
+    public Integer getWinCount() {
+        return winCount;
     }
 
-    public void setVinsCount(final Integer vinsCount) {
-        this.vinsCount = vinsCount;
+    public void setWinCount(final Integer winCount) {
+        this.winCount = winCount;
     }
 
     public Float getRange() {

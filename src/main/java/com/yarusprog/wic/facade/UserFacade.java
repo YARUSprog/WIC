@@ -1,5 +1,9 @@
 package com.yarusprog.wic.facade;
 
+import java.util.List;
+import java.util.Map;
+
+import com.yarusprog.wic.dto.ContactDto;
 import com.yarusprog.wic.dto.FriendListResponce;
 import com.yarusprog.wic.dto.RatingResponse;
 import com.yarusprog.wic.dto.Response;
@@ -12,4 +16,5 @@ public interface UserFacade {
     RatingResponse getRatingOfUsers(String country, String region, String city);
     Response addContactToUser(String login, String typeContact, String contact);
     Response setPhotoToUser(String login, MultipartFile photo);
+    Map<String, List<ContactDto>> getUserContacts();
 }

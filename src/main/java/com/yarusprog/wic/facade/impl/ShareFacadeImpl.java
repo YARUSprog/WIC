@@ -2,7 +2,7 @@ package com.yarusprog.wic.facade.impl;
 
 import java.util.Arrays;
 
-import com.yarusprog.wic.dto.Share;
+import com.yarusprog.wic.dto.ShareDto;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.model.ShareState;
@@ -28,11 +28,11 @@ public class ShareFacadeImpl implements ShareFacade {
     private SharesResponse getShareRequestTestData(final Boolean valid) {
         SharesResponse sharesResponse;
         if (valid) {
-            Share mcdonaldShare = new Share("/images/mcdonalds-logo.png", "Macdonalds", 55,
+            ShareDto mcdonaldShare = new ShareDto("/images/mcdonalds-logo.png", "Macdonalds", 55,
                     10, "#FF1493", ShareState.ACTIVE.ordinal());
-            Share cocaColaShare = new Share("/images/cocacola-logo.png", "Cocacola", 23,
+            ShareDto cocaColaShare = new ShareDto("/images/cocacola-logo.png", "Cocacola", 23,
                     0, "#FFA500", ShareState.SOON.ordinal());
-            Share cocaColaShare2 = new Share("/images/cocacola-logo.png", "Cocacola", 44,
+            ShareDto cocaColaShare2 = new ShareDto("/images/cocacola-logo.png", "Cocacola", 44,
                     0, "#32CD32", ShareState.COMPLETED.ordinal());
             sharesResponse = new SharesResponse(Arrays.asList(mcdonaldShare, cocaColaShare, cocaColaShare2));
             sharesResponse.setSuccess(true);
