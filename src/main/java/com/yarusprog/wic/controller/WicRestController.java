@@ -48,6 +48,11 @@ public class WicRestController {
         return companyFacade.getShares(login);
     }
 
+    @GetMapping("/allItems")
+    public AllItemsResponse getAllItems(@RequestParam(value = "login", required = false) String login) {
+        return userFacade.getAllItems(login);
+    }
+
     @PostMapping("/profile/addContact")
     public Response addContactToUser(@RequestParam(value = "login", required = true) String login,
                                         @RequestParam(value = "typeContact", required = true) String

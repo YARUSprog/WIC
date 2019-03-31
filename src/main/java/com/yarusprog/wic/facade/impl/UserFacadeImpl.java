@@ -2,6 +2,7 @@ package com.yarusprog.wic.facade.impl;
 
 import com.yarusprog.wic.dto.*;
 import com.yarusprog.wic.facade.UserFacade;
+import com.yarusprog.wic.model.ShareState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class UserFacadeImpl implements UserFacade {
     private static final Logger LOG = LoggerFactory.getLogger(UserFacadeImpl.class);
 
     private List<UserDto> users;
+    private List<AllItemsDto> allItemsDtos;
     private List<ContactDto> contacts;
     private Map<String, List<ContactDto>> userContacts;
 
@@ -62,6 +64,11 @@ public class UserFacadeImpl implements UserFacade {
         return getFriendListResponceTestData(isLoginValid(login));
     }
 
+    @Override
+    public AllItemsResponse getAllItems(final String login) {
+        return getAllItemsResponceTestData(isLoginValid(login));
+    }
+
     public static Boolean isLoginValid(final String login) {
         return !StringUtils.isEmpty(login) && ("myemail@gmail.com".equals(login) || "user@gmail.com".equals(login));
     }
@@ -95,6 +102,26 @@ public class UserFacadeImpl implements UserFacade {
             friendListResponce.setErrorCode(1);
         }
         return friendListResponce;
+    }
+
+    private AllItemsResponse getAllItemsResponceTestData(final Boolean valid) {
+        AllItemsResponse allItemsResponse = new AllItemsResponse();
+        if (valid) {
+            AllItemsDto mcdonaldItem = new AllItemsDto("testSharedId", "Macdonalds", "/images/mcdonalds-logo.png",
+                    "/images/mcdonalds-logo.png", 55, 10);
+            AllItemsDto cocaColaItem = new AllItemsDto("testSharedId2", "Cocacola", "/images/cocacola-logo.png",
+                    "/images/cocacola-logo.png", 44, 5);
+            AllItemsDto cocaColaItem2 = new AllItemsDto("testSharedId3", "Cocacola", "/images/cocacola-logo.png",
+                    "/images/cocacola-logo.png", 44, 0);
+
+            allItemsResponse = new AllItemsResponse(Arrays.asList(mcdonaldItem, cocaColaItem, cocaColaItem2));
+            allItemsResponse.setSuccess(true);
+            allItemsResponse.setErrorCode(0);
+        } else {
+            allItemsResponse.setSuccess(false);
+            allItemsResponse.setErrorCode(1);
+        }
+        return allItemsResponse;
     }
 
     @Override
