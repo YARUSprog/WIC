@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.*;
 import java.util.*;
 
 @Component
@@ -69,6 +70,11 @@ public class UserFacadeImpl implements UserFacade {
         return getAllItemsResponceTestData(isLoginValid(login));
     }
 
+    @Override
+    public NoticeResponse getNotices(final String login) {
+        return getNoticesTestData(isLoginValid(login));
+    }
+
     public static Boolean isLoginValid(final String login) {
         return !StringUtils.isEmpty(login) && ("myemail@gmail.com".equals(login) || "user@gmail.com".equals(login));
     }
@@ -108,11 +114,11 @@ public class UserFacadeImpl implements UserFacade {
         AllItemsResponse allItemsResponse = new AllItemsResponse();
         if (valid) {
             AllItemsDto mcdonaldItem = new AllItemsDto("testSharedId", "Macdonalds", "/images/mcdonalds-logo.png",
-                    "/images/mcdonalds-logo.png", 55, 10);
+                    "/images/product-macdonalds.png", 55, 10);
             AllItemsDto cocaColaItem = new AllItemsDto("testSharedId2", "Cocacola", "/images/cocacola-logo.png",
-                    "/images/cocacola-logo.png", 44, 5);
+                    "/images/product-cocacola.png", 44, 7);
             AllItemsDto cocaColaItem2 = new AllItemsDto("testSharedId3", "Cocacola", "/images/cocacola-logo.png",
-                    "/images/cocacola-logo.png", 44, 0);
+                    "/images/product-1-cocacola.png", 44, 5);
 
             allItemsResponse = new AllItemsResponse(Arrays.asList(mcdonaldItem, cocaColaItem, cocaColaItem2));
             allItemsResponse.setSuccess(true);
@@ -122,6 +128,22 @@ public class UserFacadeImpl implements UserFacade {
             allItemsResponse.setErrorCode(1);
         }
         return allItemsResponse;
+    }
+
+    private NoticeResponse getNoticesTestData(final Boolean valid) {
+        NoticeResponse noticesResponse = new NoticeResponse();
+        if (valid) {
+            NoticeDto notice1 = new NoticeDto("test note 1", LocalDateTime.now().minusDays(2).toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+            NoticeDto notice2 = new NoticeDto("test note 2", LocalDateTime.now().minusDays(4).toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+            NoticeDto notice3 = new NoticeDto("test note 3", LocalDateTime.now().minusDays(6).toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
+            noticesResponse = new NoticeResponse(Arrays.asList(notice1, notice2, notice3));
+            noticesResponse.setSuccess(true);
+            noticesResponse.setErrorCode(0);
+        } else {
+            noticesResponse.setSuccess(false);
+            noticesResponse.setErrorCode(1);
+        }
+        return noticesResponse;
     }
 
     @Override

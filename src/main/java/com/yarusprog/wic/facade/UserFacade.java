@@ -10,6 +10,7 @@ public interface UserFacade {
     UserProfileResponse getUserProfile(String login);
     FriendListResponce getFriends(String login);
     AllItemsResponse getAllItems(String login);
+    NoticeResponse getNotices(String login);
     RatingResponse getRatingOfUsers(String country, String region, String city);
     Response addContactToUser(String login, String typeContact, String contact);
     Response setPhotoToUser(String login, MultipartFile photo);

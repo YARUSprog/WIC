@@ -53,6 +53,11 @@ public class WicRestController {
         return userFacade.getAllItems(login);
     }
 
+    @GetMapping("/notices")
+    public NoticeResponse getNotices(@RequestParam(value = "login", required = false) String login) {
+        return userFacade.getNotices(login);
+    }
+
     @PostMapping("/profile/addContact")
     public Response addContactToUser(@RequestParam(value = "login", required = true) String login,
                                         @RequestParam(value = "typeContact", required = true) String
