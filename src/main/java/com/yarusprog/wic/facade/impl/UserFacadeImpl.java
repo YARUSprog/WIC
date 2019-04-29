@@ -2,7 +2,7 @@ package com.yarusprog.wic.facade.impl;
 
 import com.yarusprog.wic.dto.*;
 import com.yarusprog.wic.facade.UserFacade;
-import com.yarusprog.wic.model.ShareState;
+import com.yarusprog.wic.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.*;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class UserFacadeImpl implements UserFacade {
 
     private static final String photoUploadPath = "upload.images.path";
+    private static final int CODE_LOWER_LIMIT = 10000;
+    private static final int CODE_UPPER_LIMIT = 100000;
+    private static Integer CODE = 0;
 
     private static final Logger LOG = LoggerFactory.getLogger(UserFacadeImpl.class);
 
@@ -33,6 +38,9 @@ public class UserFacadeImpl implements UserFacade {
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    private EmailService emailService;
 
 
     {
@@ -149,6 +157,18 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public RatingResponse getRatingOfUsers(final String country, final String region, final String city) {
         return getRatingOfUsersTestData(isValidRatingOfUsersRequest(country, region, city));
+    }
+
+    @Override
+    public void sendGeneratedCodeToUser(final String login) {
+        CODE = ThreadLocalRandom.current().nextInt(CODE_LOWER_LIMIT, CODE_UPPER_LIMIT);
+
+        emailService.sendSimpleMessage(login, "Registration code", "Your registration code: " + CODE);
+    }
+
+    @Override
+    public boolean verifyCode(final Integer code) {
+        return CODE.equals(code);
     }
 
     private Boolean isValidRatingOfUsersRequest(final String country, final String region,

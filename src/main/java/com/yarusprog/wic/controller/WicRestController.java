@@ -6,6 +6,7 @@ import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.facade.UserFacade;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -82,6 +83,18 @@ public class WicRestController {
                                            @RequestParam(value = "region", required = false) String region,
                                            @RequestParam(value = "city", required = false) String city) {
         return userFacade.getRatingOfUsers(country, region, city);
+    }
+
+    @PostMapping("/generateCode")
+    @ResponseStatus(HttpStatus.OK)
+    public void generateCode(@RequestParam String login) {
+        userFacade.sendGeneratedCodeToUser(login);
+    }
+
+    @PostMapping("/verifyCode")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean verifyCode(@RequestParam Integer code) {
+        return userFacade.verifyCode(code);
     }
 
     @GetMapping("/images/uploadedPhotos/{id}")

@@ -12,6 +12,8 @@ public interface UserFacade {
     AllItemsResponse getAllItems(String login);
     NoticeResponse getNotices(String login);
     RatingResponse getRatingOfUsers(String country, String region, String city);
+    void sendGeneratedCodeToUser(String login);
+    boolean verifyCode(Integer code);
     Response addContactToUser(String login, String typeContact, String contact);
     Response setPhotoToUser(String login, MultipartFile photo);
     Map<String, List<ContactDto>> getUserContacts();
