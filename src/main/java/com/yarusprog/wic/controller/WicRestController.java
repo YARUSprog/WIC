@@ -85,16 +85,16 @@ public class WicRestController {
         return userFacade.getRatingOfUsers(country, region, city);
     }
 
-    @PostMapping("/generateCode")
+    @PostMapping("/registrationCompany")
     @ResponseStatus(HttpStatus.OK)
-    public void generateCode(@RequestParam String login) {
-        userFacade.sendGeneratedCodeToUser(login);
+    public void generateCode(@RequestParam String login, @RequestParam String address, @RequestParam String phone) {
+        userFacade.registerCompany(login, address, phone);
     }
 
     @PostMapping("/verifyCode")
     @ResponseStatus(HttpStatus.OK)
-    public boolean verifyCode(@RequestParam Integer code) {
-        return userFacade.verifyCode(code);
+    public Response verifyCode(@RequestParam Integer code, @RequestParam String phone) {
+        return userFacade.verifyCode(phone, code);
     }
 
     @GetMapping("/images/uploadedPhotos/{id}")

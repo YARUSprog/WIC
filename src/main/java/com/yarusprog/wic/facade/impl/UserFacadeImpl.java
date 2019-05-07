@@ -27,7 +27,7 @@ public class UserFacadeImpl implements UserFacade {
     private static final String photoUploadPath = "upload.images.path";
     private static final int CODE_LOWER_LIMIT = 10000;
     private static final int CODE_UPPER_LIMIT = 100000;
-    private static Integer CODE = 0;
+    private static Map<String, CompanyDto> companies = new HashMap();
 
     private static final Logger LOG = LoggerFactory.getLogger(UserFacadeImpl.class);
 
@@ -160,15 +160,29 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void sendGeneratedCodeToUser(final String login) {
-        CODE = ThreadLocalRandom.current().nextInt(CODE_LOWER_LIMIT, CODE_UPPER_LIMIT);
+    public Response registerCompany(final String login, final String address, final String phone) {
+        int code = ThreadLocalRandom.current().nextInt(CODE_LOWER_LIMIT, CODE_UPPER_LIMIT);
 
-        emailService.sendSimpleMessage(login, "Registration code", "Your registration code: " + CODE);
+        final CompanyDto company = new CompanyDto(login, address, phone, code);
+        companies.put(phone, company);
+
+        emailService.sendSimpleMessage(login, "Registration code", "Your registration code: " + code);
+
+        return new Response();
     }
 
     @Override
-    public boolean verifyCode(final Integer code) {
-        return CODE.equals(code);
+    public Response verifyCode(final String phone, final Integer code) {
+        final CompanyDto company = (CompanyDto) companies.get(phone);
+
+        if (Objects.isNull(company)) {
+            return new Response(false, 1);
+        } else if (!company.getCode().equals(code)) {
+            return new Response(false, 2);
+        }
+        companies.remove(phone);
+
+        return new Response();
     }
 
     private Boolean isValidRatingOfUsersRequest(final String country, final String region,
