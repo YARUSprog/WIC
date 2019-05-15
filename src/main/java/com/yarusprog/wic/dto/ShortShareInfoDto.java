@@ -1,6 +1,6 @@
 package com.yarusprog.wic.dto;
 
-public class ShareDto {
+public class ShortShareInfoDto {
     private String pictureOfCompanyUrl;
     private String companyName;
     private Integer allItemsCount;
@@ -8,7 +8,7 @@ public class ShareDto {
     private String color;
     private Integer state;
 
-    public ShareDto(final String pictureOfCompanyUrl, final String companyName, final Integer allItemsCount, final
+    public ShortShareInfoDto(final String pictureOfCompanyUrl, final String companyName, final Integer allItemsCount, final
     Integer pickedItemsCount, final String color, final Integer state) {
         this.pictureOfCompanyUrl = pictureOfCompanyUrl;
         this.companyName = companyName;

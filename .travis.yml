@@ -3,6 +3,7 @@ before_install:
   - chmod +x mvnw
 before_script:
   - echo "Starting build"
+  - psql -c "CREATE DATABASE wic_db;" -U postgres
 script:
   - mvn clean package
 after_script:

@@ -2,16 +2,30 @@ package com.yarusprog.wic.facade.impl;
 
 import java.util.Arrays;
 
-import com.yarusprog.wic.dto.ShareDto;
+import com.yarusprog.wic.converter.ShareConverter;
+import com.yarusprog.wic.dto.ShortShareInfoDto;
 import com.yarusprog.wic.dto.SharesResponse;
+import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.model.ShareState;
 
+import com.yarusprog.wic.service.ShareService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
 public class ShareFacadeImpl implements ShareFacade {
+
+    @Autowired
+    private ShareService shareService;
+
+    @Autowired
+    private ShareConverter shareConverter;
+
+    private void saveShare(final ShareDto shareDto) {
+        shareService.saveShare(shareConverter.convertToModel(shareDto));
+    }
 
     public SharesResponse getShares(final String login, final String country, final String region, final String city) {
         return getShareRequestTestData(isValidGetShareRequest(login, country, region, city));
@@ -28,11 +42,11 @@ public class ShareFacadeImpl implements ShareFacade {
     private SharesResponse getShareRequestTestData(final Boolean valid) {
         SharesResponse sharesResponse;
         if (valid) {
-            ShareDto mcdonaldShare = new ShareDto("/images/mcdonalds-logo.png", "Macdonalds", 55,
+            ShortShareInfoDto mcdonaldShare = new ShortShareInfoDto("/images/mcdonalds-logo.png", "Macdonalds", 55,
                     10, "#FF1493", ShareState.ACTIVE.ordinal());
-            ShareDto cocaColaShare = new ShareDto("/images/cocacola-logo.png", "Cocacola", 23,
+            ShortShareInfoDto cocaColaShare = new ShortShareInfoDto("/images/cocacola-logo.png", "Cocacola", 23,
                     0, "#FFA500", ShareState.SOON.ordinal());
-            ShareDto cocaColaShare2 = new ShareDto("/images/cocacola-logo.png", "Cocacola", 44,
+            ShortShareInfoDto cocaColaShare2 = new ShortShareInfoDto("/images/cocacola-logo.png", "Cocacola", 44,
                     0, "#32CD32", ShareState.COMPLETED.ordinal());
             sharesResponse = new SharesResponse(Arrays.asList(mcdonaldShare, cocaColaShare, cocaColaShare2));
             sharesResponse.setSuccess(true);

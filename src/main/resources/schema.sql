@@ -1,0 +1,98 @@
+DROP SCHEMA IF EXISTS public CASCADE;
+commit;
+CREATE SCHEMA public;
+commit;
+
+CREATE TABLE shares
+(
+    id                    BIGSERIAL     NOT NULL,
+    share_name            VARCHAR(100)  NOT NULL,
+    description           VARCHAR(300),
+    count_of_product      INTEGER       NOT NULL,
+    photo_product_url     VARCHAR(100),
+    product_name          VARCHAR(100),
+    link_on_product_url   VARCHAR(100),
+    product_price         FLOAT         NOT NULL,
+    announcement_duration INTEGER,
+    share_duration        INTEGER,
+    after_share_duration  INTEGER,
+    color                 VARCHAR(40)   NOT NULL,
+    picked_items_count    INTEGER       NOT NULL,
+    all_items_count       INTEGER       NOT NULL,
+    code_for_winner       VARCHAR(100),
+    date                  TIMESTAMP     NOT NULL,
+    status_id             INTEGER,
+    place_address_id      INTEGER,
+    company_id            INTEGER
+);
+
+CREATE INDEX shares_IDX ON shares( share_name ASC);
+
+ALTER TABLE shares
+  ADD CONSTRAINT shares_PK PRIMARY KEY (id);
+
+--Is it necessary ?
+ALTER TABLE shares
+  ADD CONSTRAINT shares_UN UNIQUE (share_name);
+
+CREATE TABLE share_statuses
+(
+    id      SERIAL        NOT NULL,
+    name    VARCHAR(50)   NOT NULL
+);
+
+ALTER TABLE share_statuses
+  ADD CONSTRAINT share_statuses_PK PRIMARY KEY (id);
+
+ALTER TABLE share_statuses
+  ADD CONSTRAINT share_statuses_UN UNIQUE (status);
+
+CREATE TABLE items
+(
+    id         BIGSERIAL  NOT NULL,
+    longitude  FLOAT      NOT NULL,
+    latitude   FLOAT      NOT NULL,
+    share_id   INTEGER    NOT NULL,
+    user_id    INTEGER
+);
+
+ALTER TABLE items
+  ADD CONSTRAINT items_PK PRIMARY KEY (id);
+
+CREATE TABLE address
+(
+    id            BIGSERIAL    NOT NULL,
+    country       VARCHAR(50)  NOT NULL,
+    region        VARCHAR(50)  NOT NULL,
+    city          VARCHAR(50)  NOT NULL,
+    address_line  VARCHAR(200)
+);
+
+ALTER TABLE address
+  ADD CONSTRAINT address_PK PRIMARY KEY (id);
+
+-----------------------------------------------------------------------------------
+-------------------------------Foreign keys----------------------------------------
+-----------------------------------------------------------------------------------
+
+ALTER TABLE shares
+  ADD CONSTRAINT shares_address_FK FOREIGN KEY
+  (
+    place_address_id
+  )
+REFERENCES address
+  (
+    id
+  );
+
+ALTER TABLE items
+  ADD CONSTRAINT items_share_FK FOREIGN KEY
+  (
+    share_id
+  )
+REFERENCES shares
+  (
+    id
+  ) ON DELETE CASCADE;
+
+COMMIT;

@@ -2,7 +2,7 @@ package com.yarusprog.wic.facade.impl;
 
 import com.yarusprog.wic.dto.*;
 import com.yarusprog.wic.facade.UserFacade;
-import com.yarusprog.wic.service.EmailService;
+import com.yarusprog.wic.service.email.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

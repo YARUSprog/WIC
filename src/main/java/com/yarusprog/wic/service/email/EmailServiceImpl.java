@@ -1,4 +1,4 @@
-package com.yarusprog.wic.service;
+package com.yarusprog.wic.service.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
