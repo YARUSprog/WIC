@@ -12,7 +12,7 @@ public class ShareModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "share_name")
     private String shareName;
@@ -73,11 +73,11 @@ public class ShareModel {
     @JoinColumn(name = "place_address_id", referencedColumnName = "id")
     private AddressModel placeAddress;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -2,39 +2,77 @@ package com.yarusprog.wic.dto.entity;
 
 import com.yarusprog.wic.model.ShareState;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.util.List;
 
 public class ShareDto {
 
-    private long id;
+    @Null
+    private Long id;
+
+    @NotBlank
     private String shareName;
+
+    @NotBlank
     private String description;
-    private int countOfProduct;
+
+    @Positive
+    private Integer countOfProduct;
+
+    @NotBlank
     private String photoProductUrl;
+
+    @NotBlank
     private String productName;
+
     private String linkOnProductUrl;
-    private double productPrice;
+
+    private Double productPrice;
+
+    @Positive
     private Integer announcementDuration;
+
+    @Positive
     private Integer shareDuration;
+
+    @Positive
     private Integer afterShareDuration;
+
+    @NotBlank
     private String color;
-    private int pickedItemsCount;
-    private int allItemsCount;
+
+    @Positive
+    private Integer pickedItemsCount;
+
+    @Positive
+    private Integer allItemsCount;
+
+    @NotBlank
     private String codeForWinner;
+
+    @FutureOrPresent
     private Timestamp date;
+
+    @Null
     private ShareState status;
+
+    @Null
     private Integer companyId;
+
+    @Valid
+    @NotEmpty
     private List<ItemDto> items;
 
     public ShareDto() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,11 +92,11 @@ public class ShareDto {
         this.description = description;
     }
 
-    public int getCountOfProduct() {
+    public Integer getCountOfProduct() {
         return countOfProduct;
     }
 
-    public void setCountOfProduct(int countOfProduct) {
+    public void setCountOfProduct(Integer countOfProduct) {
         this.countOfProduct = countOfProduct;
     }
 
@@ -86,11 +124,11 @@ public class ShareDto {
         this.linkOnProductUrl = linkOnProductUrl;
     }
 
-    public double getProductPrice() {
+    public Double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(double productPrice) {
+    public void setProductPrice(Double productPrice) {
         this.productPrice = productPrice;
     }
 
@@ -126,19 +164,19 @@ public class ShareDto {
         this.color = color;
     }
 
-    public int getPickedItemsCount() {
+    public Integer getPickedItemsCount() {
         return pickedItemsCount;
     }
 
-    public void setPickedItemsCount(int pickedItemsCount) {
+    public void setPickedItemsCount(Integer pickedItemsCount) {
         this.pickedItemsCount = pickedItemsCount;
     }
 
-    public int getAllItemsCount() {
+    public Integer getAllItemsCount() {
         return allItemsCount;
     }
 
-    public void setAllItemsCount(int allItemsCount) {
+    public void setAllItemsCount(Integer allItemsCount) {
         this.allItemsCount = allItemsCount;
     }
 

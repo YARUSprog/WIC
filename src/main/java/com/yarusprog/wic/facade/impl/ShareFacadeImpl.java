@@ -1,14 +1,17 @@
 package com.yarusprog.wic.facade.impl;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import com.yarusprog.wic.converter.ShareConverter;
 import com.yarusprog.wic.dto.ShortShareInfoDto;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.ShareFacade;
+import com.yarusprog.wic.model.ShareModel;
 import com.yarusprog.wic.model.ShareState;
 
+import com.yarusprog.wic.repository.ItemRepository;
 import com.yarusprog.wic.service.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,8 +26,19 @@ public class ShareFacadeImpl implements ShareFacade {
     @Autowired
     private ShareConverter shareConverter;
 
-    private void saveShare(final ShareDto shareDto) {
-        shareService.saveShare(shareConverter.convertToModel(shareDto));
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Override
+    public void saveShare(final ShareDto shareDto) {
+        ShareModel shareModel = shareConverter.convertToModel(shareDto);
+        shareService.saveShare(shareModel);
+        shareModel.getItems().forEach(itemModel -> {
+            itemModel.setShare(shareModel);
+            itemRepository.save(itemModel);
+        });
+//        itemRepository.findAllByShare_Id();
+
     }
 
     public SharesResponse getShares(final String login, final String country, final String region, final String city) {

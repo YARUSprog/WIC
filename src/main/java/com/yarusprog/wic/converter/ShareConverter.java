@@ -7,28 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class ShareConverter {
 
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ItemConverter itemConverter;
 
     public ShareModel convertToModel(final ShareDto source) {
-        if(Objects.nonNull(source)) {
-            final ShareModel shareModel = new ShareModel();
-            modelMapper.map(source, shareModel);
-            return shareModel;
-        }
-        return null;
+        final ShareModel shareModel = new ShareModel();
+        modelMapper.map(source, shareModel);
+        return shareModel;
     }
 
     private ShareDto convertToDto(final ShareModel source) {
-        if(Objects.nonNull(source)) {
-            final ShareDto shareDto = new ShareDto();
-            modelMapper.map(source, shareDto);
-            return shareDto;
-        }
-        return null;
+        final ShareDto shareDto = new ShareDto();
+        modelMapper.map(source, shareDto);
+        return shareDto;
     }
 }

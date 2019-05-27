@@ -1,6 +1,7 @@
 package com.yarusprog.wic.controller;
 
 import com.yarusprog.wic.dto.*;
+import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.CompanyFacade;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.facade.UserFacade;
@@ -13,10 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 
-@RestController
+@RestController()
 public class WicRestController {
 
     @Autowired
@@ -105,5 +107,12 @@ public class WicRestController {
         InputStream in = servletContext.getResourceAsStream(path);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
+    }
+
+    @PostMapping("/share")
+    public Response publicShare(@RequestParam(value = "login", required = true) String login,
+                                @Valid @RequestBody final ShareDto shareDto) {
+        shareFacade.saveShare(shareDto);
+        return new Response();
     }
 }

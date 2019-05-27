@@ -45,7 +45,7 @@ ALTER TABLE share_statuses
   ADD CONSTRAINT share_statuses_PK PRIMARY KEY (id);
 
 ALTER TABLE share_statuses
-  ADD CONSTRAINT share_statuses_UN UNIQUE (status);
+  ADD CONSTRAINT share_statuses_UN UNIQUE (name);
 
 CREATE TABLE items
 (

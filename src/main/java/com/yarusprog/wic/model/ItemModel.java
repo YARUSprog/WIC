@@ -10,7 +10,7 @@ public class ItemModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "longitude")
     private double longitude;
@@ -23,11 +23,11 @@ public class ItemModel {
     private ShareModel share;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

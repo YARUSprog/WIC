@@ -1,50 +1,60 @@
 package com.yarusprog.wic.dto.entity;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 public class ItemDto {
 
-    private long id;
-    private double longitude;
-    private double latitude;
-    private long shareId;
+    @Null
+    private Long id;
+
+    @NotNull
+    private Double longitude;
+
+    @NotNull
+    private Double latitude;
+
+    @Null
+    private Long shareId;
 
     public ItemDto() {
     }
 
-    public ItemDto(long id, double longitude, double latitude) {
+    public ItemDto(Long id, Double longitude, Double latitude) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public long getShareId() {
+    public Long getShareId() {
         return shareId;
     }
 
-    public void setShareId(long shareId) {
+    public void setShareId(Long shareId) {
         this.shareId = shareId;
     }
 }
