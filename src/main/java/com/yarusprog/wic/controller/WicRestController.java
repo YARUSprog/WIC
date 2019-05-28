@@ -110,8 +110,7 @@ public class WicRestController {
     }
 
     @PostMapping("/share")
-    public Response publicShare(@RequestParam(value = "login", required = true) String login,
-                                @Valid @RequestBody final ShareDto shareDto) {
+    public Response publicShare(@Valid @RequestBody final CreateShareDto shareDto) {
         shareFacade.saveShare(shareDto);
         return new Response();
     }

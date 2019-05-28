@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import com.yarusprog.wic.converter.ShareConverter;
+import com.yarusprog.wic.dto.CreateShareDto;
 import com.yarusprog.wic.dto.ShortShareInfoDto;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.dto.entity.ShareDto;
@@ -30,7 +31,7 @@ public class ShareFacadeImpl implements ShareFacade {
     private ItemRepository itemRepository;
 
     @Override
-    public void saveShare(final ShareDto shareDto) {
+    public void saveShare(final CreateShareDto shareDto) {
         ShareModel shareModel = shareConverter.convertToModel(shareDto);
         shareService.saveShare(shareModel);
         shareModel.getItems().forEach(itemModel -> {
