@@ -1,24 +1,38 @@
 package com.yarusprog.wic.facade.impl;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
+import com.google.common.base.Preconditions;
 import com.yarusprog.wic.converter.ShareConverter;
-import com.yarusprog.wic.dto.ShortShareInfoDto;
 import com.yarusprog.wic.dto.SharesResponse;
+import com.yarusprog.wic.dto.ShortShareInfoDto;
+import com.yarusprog.wic.dto.entity.CreateShareDto;
 import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.model.ShareModel;
 import com.yarusprog.wic.model.ShareState;
-
 import com.yarusprog.wic.repository.ItemRepository;
 import com.yarusprog.wic.service.ShareService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 @Component
 public class ShareFacadeImpl implements ShareFacade {
+
+    private static final String IMAGE_UPLOAD_BASE_PATH = "upload.images.path";
+    private static final String PRODUCT_PHOTO_PATH = "product.photo.path";
+
+    private static final Logger LOG = LoggerFactory.getLogger(ShareFacadeImpl.class);
 
     @Autowired
     private ShareService shareService;
@@ -29,16 +43,63 @@ public class ShareFacadeImpl implements ShareFacade {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private Environment env;
+
     @Override
-    public void saveShare(final ShareDto shareDto) {
+    public ShareDto saveShare(final ShareDto shareDto) {
         ShareModel shareModel = shareConverter.convertToModel(shareDto);
         shareService.saveShare(shareModel);
         shareModel.getItems().forEach(itemModel -> {
             itemModel.setShare(shareModel);
             itemRepository.save(itemModel);
         });
-//        itemRepository.findAllByShare_Id();
 
+//        shareModel.setPhotoProductUrl(savePhoto(shareDto.getPhotoProduct(), shareModel.getId(),
+//                shareModel.getProductName()));
+        return shareConverter.convertToDto(shareService.saveShare(shareModel));
+    }
+
+//    @Override
+//    public String savePhotoForProduct(final MultipartFile photo, final Long dirName, final String fileName) {
+//        Preconditions.checkNotNull(photo, "Photo can't be null!");
+//        Preconditions.checkNotNull(dirName, "Name of directory can't be null!");
+//        Preconditions.checkNotNull(fileName, "File name can't be null!");
+//        final String productPhotoDir = env.getProperty(IMAGE_UPLOAD_BASE_PATH) + env.getProperty(PRODUCT_PHOTO_PATH)
+//                + dirName;
+//
+//        new File(productPhotoDir).mkdir();
+//        final Path filePath = Paths.get(productPhotoDir, fileName);
+//
+//        try {
+//            Files.write(filePath, photo.getBytes());
+//        } catch (IOException e) {
+//            LOG.error(e.getMessage(), e);
+//        }
+//        LOG.info("File " + photo.getOriginalFilename() + " successfully uploaded !");
+//
+//        return filePath.toString();
+//    }
+
+    @Override
+    public String savePhoto(final MultipartFile photo, final Long dirName, final String fileName) {
+        Preconditions.checkNotNull(photo, "Photo can't be null!");
+        Preconditions.checkNotNull(dirName, "Name of directory can't be null!");
+        Preconditions.checkNotNull(fileName, "File name can't be null!");
+        final String productPhotoDir = env.getProperty(IMAGE_UPLOAD_BASE_PATH) + env.getProperty(PRODUCT_PHOTO_PATH)
+                + dirName;
+
+        new File(productPhotoDir).mkdir();
+        final Path filePath = Paths.get(productPhotoDir, fileName);
+
+        try {
+            Files.write(filePath, photo.getBytes());
+        } catch (IOException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        LOG.info("File " + photo.getOriginalFilename() + " successfully uploaded !");
+
+        return filePath.toString();
     }
 
     public SharesResponse getShares(final String login, final String country, final String region, final String city) {

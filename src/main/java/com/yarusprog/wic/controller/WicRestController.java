@@ -1,6 +1,7 @@
 package com.yarusprog.wic.controller;
 
 import com.yarusprog.wic.dto.*;
+import com.yarusprog.wic.dto.entity.CreateShareDto;
 import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.CompanyFacade;
 import com.yarusprog.wic.facade.ShareFacade;
@@ -109,10 +110,15 @@ public class WicRestController {
         IOUtils.copy(in, response.getOutputStream());
     }
 
-    @PostMapping("/share")
-    public Response publicShare(@RequestParam(value = "login", required = true) String login,
-                                @Valid @RequestBody final ShareDto shareDto) {
-        shareFacade.saveShare(shareDto);
-        return new Response();
+    @PostMapping("/shares")
+    public ShareDto publicShare(@Valid @ModelAttribute final ShareDto shareDto) {
+        return shareFacade.saveShare(shareDto);
+//        return new Response();
+    }
+
+    @PostMapping("/shares/productPhoto/{shareId}")
+    public Response setPhotoForShareProduct(@RequestParam(value = "photo") MultipartFile photo,
+                                            @PathVariable String shareId) {
+        return userFacade.setPhotoToUser(shareId, photo);
     }
 }

@@ -6,9 +6,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 @Component
 public class ShareConverter {
 
@@ -23,7 +20,7 @@ public class ShareConverter {
         return shareModel;
     }
 
-    private ShareDto convertToDto(final ShareModel source) {
+    public ShareDto convertToDto(final ShareModel source) {
         final ShareDto shareDto = new ShareDto();
         modelMapper.map(source, shareDto);
         return shareDto;

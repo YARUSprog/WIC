@@ -1,16 +1,14 @@
 package com.yarusprog.wic.dto.entity;
 
-import com.yarusprog.wic.model.ShareState;
-
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class ShareDto {
-
-    @Null
-    private Long id;
+public class CreateShareDto {
 
     @NotBlank
     private String shareName;
@@ -21,6 +19,7 @@ public class ShareDto {
     @Positive
     private Integer countOfProduct;
 
+    @NotBlank
     private String photoProductUrl;
 
     @NotBlank
@@ -54,25 +53,11 @@ public class ShareDto {
     @FutureOrPresent
     private Timestamp date;
 
-    @Null
-    private ShareState status;
-
-    @Null
-    private Integer companyId;
-
     @Valid
     @NotEmpty
     private List<ItemDto> items;
 
-    public ShareDto() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public CreateShareDto() {
     }
 
     public String getShareName() {
@@ -193,22 +178,6 @@ public class ShareDto {
 
     public void setDate(Timestamp date) {
         this.date = date;
-    }
-
-    public ShareState getStatus() {
-        return status;
-    }
-
-    public void setStatus(ShareState status) {
-        this.status = status;
-    }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
     }
 
     public List<ItemDto> getItems() {
