@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ShareDto {
 
-    @Null
     private Long id;
 
     @NotBlank

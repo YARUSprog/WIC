@@ -16,5 +16,6 @@ public interface UserFacade {
     Response verifyCode(String phone, Integer code);
     Response addContactToUser(String login, String typeContact, String contact);
     Response setPhotoToUser(String login, MultipartFile photo);
+    Response saveProductPhotoForShare(String shareId, MultipartFile photo);
     Map<String, List<ContactDto>> getUserContacts();
 }

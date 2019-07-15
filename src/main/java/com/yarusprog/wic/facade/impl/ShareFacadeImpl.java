@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.yarusprog.wic.converter.ShareConverter;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.dto.ShortShareInfoDto;
-import com.yarusprog.wic.dto.entity.CreateShareDto;
 import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.model.ShareModel;

@@ -24,7 +24,8 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 public class UserFacadeImpl implements UserFacade {
 
-    private static final String photoUploadPath = "upload.images.path";
+    private static final String PHOTO_UPLOAD_DIR = "upload.images.path";
+    private static final String PRODUCT_PHOTO_DIR = "product.photo.path";
     private static final int CODE_LOWER_LIMIT = 10000;
     private static final int CODE_UPPER_LIMIT = 100000;
     private static Map<String, CompanyDto> companies = new HashMap();
@@ -85,6 +86,10 @@ public class UserFacadeImpl implements UserFacade {
 
     public static Boolean isLoginValid(final String login) {
         return !StringUtils.isEmpty(login) && ("myemail@gmail.com".equals(login) || "user@gmail.com".equals(login));
+    }
+
+    public static Boolean isShareIdValid(final String shareId) {
+        return !StringUtils.isEmpty(shareId);
     }
 
     private UserProfileResponse getUserProfileTestData(final Boolean valid) {
@@ -221,7 +226,7 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public Response setPhotoToUser(final String login, final MultipartFile photo) {
         if(isLoginValid(login)) {
-            final String uploadDir = env.getProperty(photoUploadPath);
+            final String uploadDir = env.getProperty(PHOTO_UPLOAD_DIR);
 
             new File(uploadDir).mkdir();
             final Path filePath = Paths.get(uploadDir, photo.getOriginalFilename());
@@ -231,6 +236,27 @@ public class UserFacadeImpl implements UserFacade {
                 LOG.error(e.getMessage(), e);
             }
             LOG.info("File " + photo.getOriginalFilename() + " for user " + login + " successfully uploaded !");
+            return new Response(true, 0);
+        }
+        return new Response(false, 1);
+    }
+
+    @Override
+    public Response saveProductPhotoForShare(final String shareId, final MultipartFile photo) {
+        if(isShareIdValid(shareId)) {
+            final String separator = System.lineSeparator();
+            final String uploadDir = env.getProperty(PHOTO_UPLOAD_DIR);
+            final String productPhotoDir = env.getProperty(PRODUCT_PHOTO_DIR);
+
+
+            new File(uploadDir).mkdir();
+            final Path filePath = Paths.get(uploadDir, productPhotoDir, separator + shareId, separator + shareId);
+            try {
+                Files.write(filePath, photo.getBytes());
+            } catch (IOException e) {
+                LOG.error(e.getMessage(), e);
+            }
+            LOG.info("File " + photo.getOriginalFilename() + " for share " + shareId + " successfully uploaded !");
             return new Response(true, 0);
         }
         return new Response(false, 1);

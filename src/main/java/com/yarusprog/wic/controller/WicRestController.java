@@ -1,7 +1,6 @@
 package com.yarusprog.wic.controller;
 
 import com.yarusprog.wic.dto.*;
-import com.yarusprog.wic.dto.entity.CreateShareDto;
 import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.CompanyFacade;
 import com.yarusprog.wic.facade.ShareFacade;
