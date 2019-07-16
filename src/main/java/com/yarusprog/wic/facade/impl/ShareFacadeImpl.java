@@ -54,51 +54,12 @@ public class ShareFacadeImpl implements ShareFacade {
             itemRepository.save(itemModel);
         });
 
-//        shareModel.setPhotoProductUrl(savePhoto(shareDto.getPhotoProduct(), shareModel.getId(),
-//                shareModel.getProductName()));
         return shareConverter.convertToDto(shareService.saveShare(shareModel));
     }
 
-//    @Override
-//    public String savePhotoForProduct(final MultipartFile photo, final Long dirName, final String fileName) {
-//        Preconditions.checkNotNull(photo, "Photo can't be null!");
-//        Preconditions.checkNotNull(dirName, "Name of directory can't be null!");
-//        Preconditions.checkNotNull(fileName, "File name can't be null!");
-//        final String productPhotoDir = env.getProperty(IMAGE_UPLOAD_BASE_PATH) + env.getProperty(PRODUCT_PHOTO_PATH)
-//                + dirName;
-//
-//        new File(productPhotoDir).mkdir();
-//        final Path filePath = Paths.get(productPhotoDir, fileName);
-//
-//        try {
-//            Files.write(filePath, photo.getBytes());
-//        } catch (IOException e) {
-//            LOG.error(e.getMessage(), e);
-//        }
-//        LOG.info("File " + photo.getOriginalFilename() + " successfully uploaded !");
-//
-//        return filePath.toString();
-//    }
-
     @Override
-    public String savePhoto(final MultipartFile photo, final Long dirName, final String fileName) {
-        Preconditions.checkNotNull(photo, "Photo can't be null!");
-        Preconditions.checkNotNull(dirName, "Name of directory can't be null!");
-        Preconditions.checkNotNull(fileName, "File name can't be null!");
-        final String productPhotoDir = env.getProperty(IMAGE_UPLOAD_BASE_PATH) + env.getProperty(PRODUCT_PHOTO_PATH)
-                + dirName;
-
-        new File(productPhotoDir).mkdir();
-        final Path filePath = Paths.get(productPhotoDir, fileName);
-
-        try {
-            Files.write(filePath, photo.getBytes());
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-        }
-        LOG.info("File " + photo.getOriginalFilename() + " successfully uploaded !");
-
-        return filePath.toString();
+    public ShareDto uploadPhotoForShareProduct(final MultipartFile photo, final Long shareId) {
+        return shareConverter.convertToDto(shareService.savePhotoForShareProduct(photo, shareId));
     }
 
     public SharesResponse getShares(final String login, final String country, final String region, final String city) {

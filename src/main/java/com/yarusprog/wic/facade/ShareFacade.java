@@ -6,6 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ShareFacade {
     ShareDto saveShare(ShareDto shareDto);
-    String savePhoto(MultipartFile photo, Long dirName, String fileName);
+    ShareDto uploadPhotoForShareProduct(MultipartFile photo, Long shareId);
     SharesResponse getShares(String login, String country, String region, String city);
 }

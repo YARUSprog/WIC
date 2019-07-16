@@ -109,15 +109,16 @@ public class WicRestController {
         IOUtils.copy(in, response.getOutputStream());
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/shares")
-    public ShareDto publicShare(@Valid @ModelAttribute final ShareDto shareDto) {
-        return shareFacade.saveShare(shareDto);
-//        return new Response();
+    public FullShareResponse publicShare(@Valid @ModelAttribute final ShareDto shareDto) {
+        return new FullShareResponse(shareFacade.saveShare(shareDto));
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/shares/productPhoto/{shareId}")
-    public Response setPhotoForShareProduct(@RequestParam(value = "photo") MultipartFile photo,
-                                            @PathVariable String shareId) {
-        return userFacade.setPhotoToUser(shareId, photo);
+    public FullShareResponse setPhotoForShareProduct(@RequestParam(value = "photo") MultipartFile photo,
+                                            @PathVariable Long shareId) {
+        return new FullShareResponse(shareFacade.uploadPhotoForShareProduct(photo, shareId));
     }
 }
