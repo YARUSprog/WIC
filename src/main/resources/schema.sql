@@ -9,7 +9,7 @@ CREATE TABLE shares
     share_name            VARCHAR(100)  NOT NULL,
     description           VARCHAR(300),
     count_of_product      INTEGER       NOT NULL,
-    product_image_id      VARCHAR(100),
+    product_image_id      INTEGER,
     product_name          VARCHAR(100),
     link_on_product_url   VARCHAR(100),
     product_price         FLOAT         NOT NULL,

@@ -3,7 +3,6 @@ package com.yarusprog.wic.controller;
 import com.yarusprog.wic.dto.*;
 import com.yarusprog.wic.dto.entity.CreateShareDto;
 import com.yarusprog.wic.dto.entity.ImageDto;
-import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.CompanyFacade;
 import com.yarusprog.wic.facade.ImageFacade;
 import com.yarusprog.wic.facade.ShareFacade;
@@ -19,7 +18,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -133,7 +131,6 @@ public class WicRestController {
     @GetMapping("/productImage/{id}")
     public void getProductImageAsResource(HttpServletResponse response, @PathVariable("id") long id) throws IOException {
         final ImageDto imageDto = imageFacade.getImageById(id);
-        String path = servletContext.getContextPath() + "/src/main/uploadedPhotos/" + id;
         InputStream in = new ByteArrayInputStream(imageDto.getImage());
         response.setContentType(imageDto.getFormat());
         IOUtils.copy(in, response.getOutputStream());
