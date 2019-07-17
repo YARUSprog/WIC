@@ -1,7 +1,12 @@
 package com.yarusprog.wic.service;
 
+import com.yarusprog.wic.model.ImageModel;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 public interface ImageService {
-    String saveFile(MultipartFile image, String imageDir, String fileName);
+    long saveFile(MultipartFile image) throws IOException;
+    long saveFile(MultipartFile image, long imageId) throws IOException;
+    ImageModel getImageById(long imageId);
 }

@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.yarusprog.wic.converter.ShareConverter;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.dto.ShortShareInfoDto;
+import com.yarusprog.wic.dto.entity.CreateShareDto;
 import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.model.ShareModel;
@@ -46,8 +47,8 @@ public class ShareFacadeImpl implements ShareFacade {
     private Environment env;
 
     @Override
-    public ShareDto saveShare(final ShareDto shareDto) {
-        ShareModel shareModel = shareConverter.convertToModel(shareDto);
+    public ShareDto saveShare(final CreateShareDto createShareDto) {
+        ShareModel shareModel = shareConverter.convertToModel(createShareDto);
         shareService.saveShare(shareModel);
         shareModel.getItems().forEach(itemModel -> {
             itemModel.setShare(shareModel);

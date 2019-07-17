@@ -53,10 +53,8 @@ public class ShareDto {
     @FutureOrPresent
     private Timestamp date;
 
-    @Null
     private ShareState status;
 
-    @Null
     private Integer companyId;
 
     @Valid

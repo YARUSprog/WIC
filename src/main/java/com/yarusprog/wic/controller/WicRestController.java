@@ -1,8 +1,11 @@
 package com.yarusprog.wic.controller;
 
 import com.yarusprog.wic.dto.*;
+import com.yarusprog.wic.dto.entity.CreateShareDto;
+import com.yarusprog.wic.dto.entity.ImageDto;
 import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.CompanyFacade;
+import com.yarusprog.wic.facade.ImageFacade;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.facade.UserFacade;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -15,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -32,6 +37,9 @@ public class WicRestController {
 
     @Autowired
     private ServletContext servletContext;
+
+    @Autowired
+    private ImageFacade imageFacade;
 
     @GetMapping("/shares")
     public SharesResponse getShares(@RequestParam(value = "login", required = false) String login,
@@ -111,8 +119,8 @@ public class WicRestController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/shares")
-    public FullShareResponse publicShare(@Valid @ModelAttribute final ShareDto shareDto) {
-        return new FullShareResponse(shareFacade.saveShare(shareDto));
+    public FullShareResponse publicShare(@Valid @RequestBody final CreateShareDto createShareDto) {
+        return new FullShareResponse(shareFacade.saveShare(createShareDto));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -120,5 +128,14 @@ public class WicRestController {
     public FullShareResponse setPhotoForShareProduct(@RequestParam(value = "photo") MultipartFile photo,
                                             @PathVariable Long shareId) {
         return new FullShareResponse(shareFacade.uploadPhotoForShareProduct(photo, shareId));
+    }
+
+    @GetMapping("/productImage/{id}")
+    public void getProductImageAsResource(HttpServletResponse response, @PathVariable("id") long id) throws IOException {
+        final ImageDto imageDto = imageFacade.getImageById(id);
+        String path = servletContext.getContextPath() + "/src/main/uploadedPhotos/" + id;
+        InputStream in = new ByteArrayInputStream(imageDto.getImage());
+        response.setContentType(imageDto.getFormat());
+        IOUtils.copy(in, response.getOutputStream());
     }
 }

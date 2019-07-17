@@ -23,8 +23,8 @@ public class ShareModel {
     @Column(name = "count_of_product")
     private int countOfProduct;
 
-    @Column(name = "photo_product_url")
-    private String photoProductUrl;
+    @Column(name = "product_image_id")
+    private Long productImageId;
 
     @Column(name = "product_name")
     private String productName;
@@ -105,12 +105,12 @@ public class ShareModel {
         this.countOfProduct = countOfProduct;
     }
 
-    public String getPhotoProductUrl() {
-        return photoProductUrl;
+    public Long getProductImageId() {
+        return productImageId;
     }
 
-    public void setPhotoProductUrl(String photoProductUrl) {
-        this.photoProductUrl = photoProductUrl;
+    public void setProductImageId(Long productImageId) {
+        this.productImageId = productImageId;
     }
 
     public String getProductName() {
@@ -245,7 +245,7 @@ public class ShareModel {
                 allItemsCount == that.allItemsCount &&
                 Objects.equals(shareName, that.shareName) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(photoProductUrl, that.photoProductUrl) &&
+                Objects.equals(productImageId, that.productImageId) &&
                 Objects.equals(productName, that.productName) &&
                 Objects.equals(linkOnProductUrl, that.linkOnProductUrl) &&
                 Objects.equals(announcementDuration, that.announcementDuration) &&
@@ -258,8 +258,9 @@ public class ShareModel {
                 Objects.equals(companyId, that.companyId);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, shareName, description, countOfProduct, photoProductUrl, productName, linkOnProductUrl, productPrice, announcementDuration, shareDuration, afterShareDuration, color, pickedItemsCount, allItemsCount, codeForWinner, date, status, companyId);
+    @Override public int hashCode() {
+        return Objects.hash(id, shareName, description, countOfProduct, productImageId, productName, linkOnProductUrl,
+                productPrice, announcementDuration, shareDuration, afterShareDuration, color, pickedItemsCount,
+                allItemsCount, codeForWinner, date, status, companyId);
     }
 }

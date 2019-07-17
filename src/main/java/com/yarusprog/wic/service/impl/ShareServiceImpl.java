@@ -12,6 +12,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Objects;
+
 @Service("shareService")
 public class ShareServiceImpl implements ShareService {
 
@@ -38,18 +41,42 @@ public class ShareServiceImpl implements ShareService {
         return shareRepository.save(shareModel);
     }
 
+//    @Override
+//    public ShareModel savePhotoForShareProduct(final MultipartFile photo, final Long shareId) {
+//        final String productPhotoDir = env.getProperty(PRODUCT_PHOTO_PATH) + shareId;
+//        final ShareModel share = shareRepository.findById(shareId)
+//                                          .orElseThrow(() -> new IllegalStateException(
+//                                                  "Share with id: " + shareId + " doesn't exist !"));
+//        final String productName = share.getProductName();
+//        Preconditions.checkNotNull(productName, "Product name can't be null!");
+//        final String pathToPhoto = imageService.saveFile(photo, productPhotoDir, productName);
+//        share.setProductImageId(pathToPhoto);
+//
+//        LOG.info("Photo " + pathToPhoto + " successfully set to product of share:  " + shareId);
+//
+//        return share;
+//    }
+
     @Override
     public ShareModel savePhotoForShareProduct(final MultipartFile photo, final Long shareId) {
-        final String productPhotoDir = env.getProperty(PRODUCT_PHOTO_PATH) + shareId;
         final ShareModel share = shareRepository.findById(shareId)
-                                          .orElseThrow(() -> new IllegalStateException(
-                                                  "Share with id: " + shareId + " doesn't exist !"));
-        final String productName = share.getProductName();
-        Preconditions.checkNotNull(productName, "Product name can't be null!");
-        final String pathToPhoto = imageService.saveFile(photo, productPhotoDir, productName);
-        share.setPhotoProductUrl(pathToPhoto);
+                                                .orElseThrow(() -> new IllegalStateException(
+                                                      "Share with id: " + shareId + " doesn't exist !"));
+        try {
+            final long imageId;
+            if (Objects.isNull(share.getProductImageId())) {
+                imageId = imageService.saveFile(photo);
+                share.setProductImageId(imageId);
+                shareRepository.save(share);
+            } else {
 
-        LOG.info("Photo " + pathToPhoto + " successfully set to product of share:  " + shareId);
+                imageId = imageService.saveFile(photo, share.getProductImageId());
+
+            }
+            LOG.info("Photo " + imageId + " successfully set to product of share:  " + shareId);
+        } catch (IOException e) {
+            LOG.error(e.getMessage(), e);
+        }
 
         return share;
     }

@@ -20,9 +20,6 @@ public class CreateShareDto {
     private Integer countOfProduct;
 
     @NotBlank
-    private String photoProductUrl;
-
-    @NotBlank
     private String productName;
 
     private String linkOnProductUrl;
@@ -82,14 +79,6 @@ public class CreateShareDto {
 
     public void setCountOfProduct(Integer countOfProduct) {
         this.countOfProduct = countOfProduct;
-    }
-
-    public String getPhotoProductUrl() {
-        return photoProductUrl;
-    }
-
-    public void setPhotoProductUrl(String photoProductUrl) {
-        this.photoProductUrl = photoProductUrl;
     }
 
     public String getProductName() {

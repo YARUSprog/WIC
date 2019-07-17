@@ -9,7 +9,7 @@ CREATE TABLE shares
     share_name            VARCHAR(100)  NOT NULL,
     description           VARCHAR(300),
     count_of_product      INTEGER       NOT NULL,
-    photo_product_url     VARCHAR(100),
+    product_image_id      VARCHAR(100),
     product_name          VARCHAR(100),
     link_on_product_url   VARCHAR(100),
     product_price         FLOAT         NOT NULL,
@@ -34,6 +34,16 @@ ALTER TABLE shares
 --Is it necessary ?
 ALTER TABLE shares
   ADD CONSTRAINT shares_UN UNIQUE (share_name);
+
+CREATE TABLE images
+(
+    id      BIGSERIAL,
+    format  VARCHAR(40),
+    image     BYTEA
+);
+
+ALTER TABLE images
+  ADD CONSTRAINT images_PK PRIMARY KEY (id);
 
 CREATE TABLE share_statuses
 (
@@ -81,6 +91,17 @@ ALTER TABLE shares
     place_address_id
   )
 REFERENCES address
+  (
+    id
+  );
+
+
+ALTER TABLE shares
+  ADD CONSTRAINT shares_image_FK FOREIGN KEY
+  (
+    product_image_id
+  )
+REFERENCES images
   (
     id
   );
