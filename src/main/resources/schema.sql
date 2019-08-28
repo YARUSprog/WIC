@@ -6,7 +6,6 @@ commit;
 CREATE TABLE shares
 (
     id                    BIGSERIAL     NOT NULL,
-    share_name            VARCHAR(100)  NOT NULL,
     description           VARCHAR(300),
     count_of_product      INTEGER       NOT NULL,
     product_image_id      INTEGER,
@@ -26,14 +25,8 @@ CREATE TABLE shares
     company_id            INTEGER
 );
 
-CREATE INDEX shares_IDX ON shares( share_name ASC);
-
 ALTER TABLE shares
   ADD CONSTRAINT shares_PK PRIMARY KEY (id);
-
---Is it necessary ?
-ALTER TABLE shares
-  ADD CONSTRAINT shares_UN UNIQUE (share_name);
 
 CREATE TABLE images
 (

@@ -12,9 +12,6 @@ public class ShareDto {
     private Long id;
 
     @NotBlank
-    private String shareName;
-
-    @NotBlank
     private String description;
 
     @Positive
@@ -70,14 +67,6 @@ public class ShareDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getShareName() {
-        return shareName;
-    }
-
-    public void setShareName(String shareName) {
-        this.shareName = shareName;
     }
 
     public String getDescription() {

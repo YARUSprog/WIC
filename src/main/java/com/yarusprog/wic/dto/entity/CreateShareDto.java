@@ -1,17 +1,12 @@
 package com.yarusprog.wic.dto.entity;
 
 import javax.validation.Valid;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
-import java.sql.Timestamp;
 import java.util.List;
 
 public class CreateShareDto {
-
-    @NotBlank
-    private String shareName;
 
     @NotBlank
     private String description;
@@ -38,31 +33,11 @@ public class CreateShareDto {
     @NotBlank
     private String color;
 
-    @Positive
-    private Integer pickedItemsCount;
-
-    @Positive
-    private Integer allItemsCount;
-
-    @NotBlank
-    private String codeForWinner;
-
-    @FutureOrPresent
-    private Timestamp date;
-
     @Valid
     @NotEmpty
     private List<ItemDto> items;
 
     public CreateShareDto() {
-    }
-
-    public String getShareName() {
-        return shareName;
-    }
-
-    public void setShareName(String shareName) {
-        this.shareName = shareName;
     }
 
     public String getDescription() {
@@ -135,38 +110,6 @@ public class CreateShareDto {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public Integer getPickedItemsCount() {
-        return pickedItemsCount;
-    }
-
-    public void setPickedItemsCount(Integer pickedItemsCount) {
-        this.pickedItemsCount = pickedItemsCount;
-    }
-
-    public Integer getAllItemsCount() {
-        return allItemsCount;
-    }
-
-    public void setAllItemsCount(Integer allItemsCount) {
-        this.allItemsCount = allItemsCount;
-    }
-
-    public String getCodeForWinner() {
-        return codeForWinner;
-    }
-
-    public void setCodeForWinner(String codeForWinner) {
-        this.codeForWinner = codeForWinner;
-    }
-
-    public Timestamp getDate() {
-        return date;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
     }
 
     public List<ItemDto> getItems() {
