@@ -13,3 +13,5 @@ after_success:
   - ls -l $TRAVIS_BUILD_DIR/target
 after_failure:
   - echo "Build was failed"
+services:
+  - postgresql
