@@ -14,9 +14,6 @@ public class ShareModel {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "share_name")
-    private String shareName;
-
     @Column(name = "description")
     private String description;
 
@@ -79,14 +76,6 @@ public class ShareModel {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getShareName() {
-        return shareName;
-    }
-
-    public void setShareName(String shareName) {
-        this.shareName = shareName;
     }
 
     public String getDescription() {
@@ -243,7 +232,6 @@ public class ShareModel {
                 Double.compare(that.productPrice, productPrice) == 0 &&
                 pickedItemsCount == that.pickedItemsCount &&
                 allItemsCount == that.allItemsCount &&
-                Objects.equals(shareName, that.shareName) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(productImageId, that.productImageId) &&
                 Objects.equals(productName, that.productName) &&
@@ -259,7 +247,7 @@ public class ShareModel {
     }
 
     @Override public int hashCode() {
-        return Objects.hash(id, shareName, description, countOfProduct, productImageId, productName, linkOnProductUrl,
+        return Objects.hash(id, description, countOfProduct, productImageId, productName, linkOnProductUrl,
                 productPrice, announcementDuration, shareDuration, afterShareDuration, color, pickedItemsCount,
                 allItemsCount, codeForWinner, date, status, companyId);
     }

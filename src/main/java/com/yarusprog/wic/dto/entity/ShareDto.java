@@ -1,5 +1,6 @@
 package com.yarusprog.wic.dto.entity;
 
+import com.yarusprog.wic.dto.AddressDto;
 import com.yarusprog.wic.model.ShareState;
 
 import javax.validation.Valid;
@@ -41,9 +42,6 @@ public class ShareDto {
     @Positive
     private Integer pickedItemsCount;
 
-    @Positive
-    private Integer allItemsCount;
-
     @NotBlank
     private String codeForWinner;
 
@@ -53,6 +51,8 @@ public class ShareDto {
     private ShareState status;
 
     private Integer companyId;
+
+    private AddressDto placeAddress;
 
     @Valid
     @NotEmpty
@@ -157,14 +157,6 @@ public class ShareDto {
         this.pickedItemsCount = pickedItemsCount;
     }
 
-    public Integer getAllItemsCount() {
-        return allItemsCount;
-    }
-
-    public void setAllItemsCount(Integer allItemsCount) {
-        this.allItemsCount = allItemsCount;
-    }
-
     public String getCodeForWinner() {
         return codeForWinner;
     }
@@ -195,6 +187,14 @@ public class ShareDto {
 
     public void setCompanyId(Integer companyId) {
         this.companyId = companyId;
+    }
+
+    public AddressDto getPlaceAddress() {
+        return placeAddress;
+    }
+
+    public void setPlaceAddress(AddressDto placeAddress) {
+        this.placeAddress = placeAddress;
     }
 
     public List<ItemDto> getItems() {

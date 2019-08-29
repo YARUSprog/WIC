@@ -9,6 +9,7 @@ import com.yarusprog.wic.dto.entity.ShareDto;
 import com.yarusprog.wic.facade.ShareFacade;
 import com.yarusprog.wic.model.ShareModel;
 import com.yarusprog.wic.model.ShareState;
+import com.yarusprog.wic.repository.AddressRepository;
 import com.yarusprog.wic.repository.ItemRepository;
 import com.yarusprog.wic.service.ShareService;
 import org.slf4j.Logger;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @Component
@@ -44,18 +47,23 @@ public class ShareFacadeImpl implements ShareFacade {
     private ItemRepository itemRepository;
 
     @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
     private Environment env;
 
     @Override
     public ShareDto saveShare(final CreateShareDto createShareDto) {
         ShareModel shareModel = shareConverter.convertToModel(createShareDto);
+        shareModel.setDate(new Timestamp(System.currentTimeMillis()));
+        addressRepository.save(shareModel.getPlaceAddress());
         shareService.saveShare(shareModel);
         shareModel.getItems().forEach(itemModel -> {
             itemModel.setShare(shareModel);
             itemRepository.save(itemModel);
         });
 
-        return shareConverter.convertToDto(shareService.saveShare(shareModel));
+        return shareConverter.convertToDto(shareModel);
     }
 
     @Override

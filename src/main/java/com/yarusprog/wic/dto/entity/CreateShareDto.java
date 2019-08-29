@@ -1,8 +1,11 @@
 package com.yarusprog.wic.dto.entity;
 
+import com.yarusprog.wic.dto.AddressDto;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -32,6 +35,10 @@ public class CreateShareDto {
 
     @NotBlank
     private String color;
+
+    @Valid
+    @NotNull
+    private AddressDto placeAddress;
 
     @Valid
     @NotEmpty
@@ -110,6 +117,14 @@ public class CreateShareDto {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public AddressDto getPlaceAddress() {
+        return placeAddress;
+    }
+
+    public void setPlaceAddress(AddressDto placeAddress) {
+        this.placeAddress = placeAddress;
     }
 
     public List<ItemDto> getItems() {

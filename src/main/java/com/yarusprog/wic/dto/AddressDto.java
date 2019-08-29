@@ -1,10 +1,23 @@
 package com.yarusprog.wic.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class AddressDto {
+
+    @NotNull
     private String country;
+
+    @NotNull
     private String region;
+
+    @NotNull
     private String city;
+
+    @NotNull
     private String addressLine;
+
+    public AddressDto() {
+    }
 
     public AddressDto(final String country, final String region, final String city, final String adressLine) {
         this.country = country;
