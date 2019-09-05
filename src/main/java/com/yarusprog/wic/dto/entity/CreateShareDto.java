@@ -11,29 +11,29 @@ import java.util.List;
 
 public class CreateShareDto {
 
-    @NotBlank
+    @NotBlank(message = "description must not be blank")
     private String description;
 
-    @Positive
+    @Positive(message = "countOfProduct must be greater than 0")
     private Integer countOfProduct;
 
-    @NotBlank
+    @NotBlank(message = "productName must not be blank")
     private String productName;
 
     private String linkOnProductUrl;
 
     private Double productPrice;
 
-    @Positive
+    @Positive(message = "announcementDuration must be greater than 0")
     private Integer announcementDuration;
 
-    @Positive
+    @Positive(message = "shareDuration must be greater than 0")
     private Integer shareDuration;
 
-    @Positive
+    @Positive(message = "afterShareDuration must be greater than 0")
     private Integer afterShareDuration;
 
-    @NotBlank
+    @NotBlank(message = "color must not be blank")
     private String color;
 
     @Valid
@@ -41,8 +41,8 @@ public class CreateShareDto {
     private AddressDto placeAddress;
 
     @Valid
-    @NotEmpty
-    private List<ItemDto> items;
+    @NotEmpty(message = "items must not be empty")
+    private List<CreateItemDto> items;
 
     public CreateShareDto() {
     }
@@ -127,11 +127,11 @@ public class CreateShareDto {
         this.placeAddress = placeAddress;
     }
 
-    public List<ItemDto> getItems() {
+    public List<CreateItemDto> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemDto> items) {
+    public void setItems(List<CreateItemDto> items) {
         this.items = items;
     }
 }

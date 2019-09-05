@@ -1,6 +1,5 @@
 package com.yarusprog.wic.facade.impl;
 
-import com.google.common.base.Preconditions;
 import com.yarusprog.wic.converter.ShareConverter;
 import com.yarusprog.wic.dto.SharesResponse;
 import com.yarusprog.wic.dto.ShortShareInfoDto;
@@ -20,13 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Arrays;
 
 @Component

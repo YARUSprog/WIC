@@ -1,20 +1,10 @@
 package com.yarusprog.wic.dto.entity;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-
 public class ItemDto {
 
-    @Null
     private Long id;
-
-    @NotNull
     private Double longitude;
-
-    @NotNull
     private Double latitude;
-
-    @Null
     private Long shareId;
 
     public ItemDto() {
