@@ -1,6 +1,8 @@
 package com.yarusprog.wic.controller;
 
 import com.yarusprog.wic.dto.FullShareResponse;
+import com.yarusprog.wic.dto.Response;
+import com.yarusprog.wic.dto.ShareResponse;
 import com.yarusprog.wic.dto.entity.CreateShareDto;
 import com.yarusprog.wic.dto.entity.ImageDto;
 import com.yarusprog.wic.facade.ImageFacade;
@@ -28,15 +30,16 @@ public class WicRestController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/shares")
-    public FullShareResponse publicShare(@Valid @RequestBody final CreateShareDto createShareDto) {
-        return new FullShareResponse(shareFacade.saveShare(createShareDto));
+    public ShareResponse publicShare(@Valid @RequestBody final CreateShareDto createShareDto) {
+        return new ShareResponse(shareFacade.saveShare(createShareDto).getId());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/shares/productPhoto/{shareId}")
-    public FullShareResponse setPhotoForShareProduct(@RequestParam(value = "photo") MultipartFile photo,
+    public Response setPhotoForShareProduct(@RequestParam(value = "photo") MultipartFile photo,
                                             @PathVariable Long shareId) {
-        return new FullShareResponse(shareFacade.uploadPhotoForShareProduct(photo, shareId));
+        shareFacade.uploadPhotoForShareProduct(photo, shareId);
+        return new Response();
     }
 
     @GetMapping("/productImage/{id}")
